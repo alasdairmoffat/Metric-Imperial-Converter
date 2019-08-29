@@ -6,7 +6,7 @@
  *       (if additional are added, keep them at the very end!)
  */
 
-/* global suite test */
+/* global suite test suiteTeardown */
 
 const chaiHttp = require('chai-http');
 const chai = require('chai');
@@ -17,6 +17,10 @@ const server = require('../server');
 chai.use(chaiHttp);
 
 suite('Functional Tests', () => {
+  suiteTeardown(async () => {
+    server.stop();
+  });
+
   suite('Routing Tests', () => {
     suite('GET /api/convert => conversion object', () => {
       test('Convert 10L (valid input)', (done) => {
@@ -40,7 +44,7 @@ suite('Functional Tests', () => {
           .get('/api/convert')
           .query({ input: '32g' })
           .end((err, res) => {
-            assert.equal(res.body, 'invalid unit');
+            assert.equal(res.text, 'invalid unit');
           });
         done();
       });
@@ -51,7 +55,7 @@ suite('Functional Tests', () => {
           .get('/api/convert')
           .query({ input: '3/7.2/4kg' })
           .end((err, res) => {
-            assert.equal(res.body, 'invalid number');
+            assert.equal(res.text, 'invalid number');
           });
         done();
       });
@@ -62,7 +66,7 @@ suite('Functional Tests', () => {
           .get('/api/convert')
           .query({ input: '3/7.2/4kilomegagram' })
           .end((err, res) => {
-            assert.equal(res.body, 'invalid number and unit');
+            assert.equal(res.text, 'invalid number and unit');
           });
         done();
       });

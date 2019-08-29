@@ -9,7 +9,6 @@ const apiRoutes = require('./routes/api.js');
 const fccTestingRoutes = require('./routes/fcctesting.js');
 const runner = require('./test-runner');
 
-
 dotenv.config();
 
 const app = express();
@@ -46,7 +45,7 @@ app.use((req, res, next) => {
 
 // Start our server and tests!
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
   if (process.env.NODE_ENV === 'test') {
     console.log('Running Tests...');
@@ -62,4 +61,9 @@ app.listen(port, () => {
   }
 });
 
+function stop() {
+  server.close();
+}
+
 module.exports = app; // for testing
+module.exports.stop = stop;
