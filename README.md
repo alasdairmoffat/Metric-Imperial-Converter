@@ -16,7 +16,7 @@
 
 ## Preview
 
-[Glitch](https://alasdairmoffat-metric-imperial-converter.glitch.me)
+[alasdairmoffat-metric-imperial-converter.glitch.me](https://alasdairmoffat-metric-imperial-converter.glitch.me)
 
 ## General Info
 
